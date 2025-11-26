@@ -1,4 +1,4 @@
-# Exercise: Context Engineering
+# Exercise: Research-Plan-Implement
 
 In this exercise, you work in pairs to complete a coding task using **frequent intentional compaction** - deliberately structuring a research → plan → implement pipeline with context resets between stages. This treats context management as the primary engineering concern.
 
