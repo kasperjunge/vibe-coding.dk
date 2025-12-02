@@ -2,44 +2,67 @@
 Clarifies technical design and architecture based on requirements.
 
 ## Initial Setup
+1. **Check for existing projects**: List directories in `specs/`
+2. **If multiple projects exist**: Ask user which project to work on
+3. **Read requirements document fully**
+4. **Suggest simple tech stack** based on requirements
+
 Respond with:
 ```
 I'm ready to help clarify the technical design.
 
-I'll read your requirements from spec/requirements.md to understand what needs to be built.
+[If multiple projects: "Which project are you working on? Available: <list>"]
 
-Please describe your tech stack and design preferences.
+I've read your requirements from specs/<project-name>/requirements.md.
+
+Based on the requirements, I suggest this tech stack:
+
+**Languages & Frameworks:**
+- [Suggest appropriate, practical framework]
+- [Key libraries/tools needed]
+
+**Data & State:**
+- [Storage/state management approach]
+
+Does this work for you, or would you prefer something different?
 ```
 
-Wait for user input.
+Wait for user input and adjust based on their feedback.
 
 ## Workflow
-1. **Read** `spec/requirements.md` FULLY
-2. **Receive user's tech preferences**
-3. **Ask clarifying questions** (3-5 at a time) about:
-   - Specific technologies and versions
-   - Architecture patterns and structure
-   - Data storage and management
-   - UI/interface approach
-   - Integration points and dependencies
-   - Testing approach and preferences
-4. **Continue asking** until no more questions remain
-5. **Generate design document** at `spec/design.md`
+1. **Select project** (if multiple exist in specs/)
+2. **Read** `specs/<project-name>/requirements.md` FULLY
+3. **Optionally read prototype code** (if helpful for context, read files in `specs/<project-name>/prototype/`)
+4. **Suggest practical tech stack** based on requirements (avoid over-engineering)
+5. **Receive user's feedback** on the suggestion (accept, modify, or propose alternative)
+6. **Ask clarifying questions** (2-3 at a time, **maximum 2 rounds**) focusing on:
+   - Architecture patterns (only if not clear from tech stack choice)
+   - Data storage approach (only if not obvious)
+7. **Stop after 2 rounds** - make reasonable assumptions for anything unclear and document them
+8. **Generate design document** at `specs/<project-name>/design.md`
 
 ## Guidelines
+- **Aim for "good enough", not perfect**: Get enough information to start - design can be refined later
+- **Avoid rabbit holes**: Don't explore every architectural option - pick sensible defaults and move on
+- **Bias toward action**: When in doubt, make a reasonable assumption and document it rather than asking another question
+- **Time target**: This phase should take ~5-10 minutes, not 30+
+- **Suggest practical stack**: Propose an appropriate, uncomplicated tech stack that fits requirements
+- **Avoid over-engineering**: Match tech choices to actual needs, not theoretical scale
+- **Consider prototype**: If prototype exists and works well, suggest building on its tech choices
+- **Don't justify simplicity**: Just suggest the stack, don't explain why it's simple or easy
 - Each bullet with a clarifying question should be numbered
 - Be specific: name actual technologies with versions, not placeholders
 - Align with requirements: every design decision should trace back to requirements
-- If user doesn't mention UI approach and requirements need one, ask or suggest
+- If user doesn't mention UI approach and requirements need one, suggest based on requirements
 - If user has no testing preferences, create appropriate strategy based on tech stack
 - Include concrete file/folder structures
-- Match complexity to project scope - don't over-engineer
-- Design for both happy path and error cases
+- Match complexity to project scope
+- If prototype code exists, you may read it for additional context if helpful
 
 ## Chat Output Format
 After completing design:
 ```
-I've created a design document at spec/design.md.
+I've created a design document at specs/<project-name>/design.md.
 
 The design includes:
 - Complete tech stack with rationale
@@ -52,7 +75,7 @@ Please review and let me know if you'd like any adjustments.
 ```
 
 ## File Output Format
-Create `spec/design.md`:
+Create `specs/<project-name>/design.md`:
 
 ```markdown
 # Design: [Project Name]
@@ -79,43 +102,15 @@ Create `spec/design.md`:
 
 **Rationale**: [Why this tech stack? How does it fit the requirements?]
 
-## System Architecture
+## Architecture & Components
 
-### High-Level Architecture
-```
-[Diagram or description of system layers]
-
-Example:
-┌─────────────────────────────┐
-│   Presentation Layer        │ ← UI Components
-├─────────────────────────────┤
-│   Business Logic Layer      │ ← State Management
-├─────────────────────────────┤
-│   Data Layer                │ ← Storage/API
-└─────────────────────────────┘
-```
-
-### Component Breakdown
-
-#### Component: [Name]
+### Component: [Name]
 **Purpose**: [What this component does]  
 **Location**: `src/components/ComponentName.tsx`  
 **Responsibilities**:
 - [Responsibility 1]
 - [Responsibility 2]
-
-**Props/Interface**:
-```typescript
-interface ComponentProps {
-  prop1: string;
-  prop2: number;
-  onAction: () => void;
-}
-```
-
-**State**:
-- [State item 1]: [Purpose]
-- [State item 2]: [Purpose]
+- [Responsibility 3]
 
 ## Data Model
 
@@ -132,44 +127,25 @@ interface EntityName {
 **Purpose**: [What this represents]  
 **Relationships**: [How it relates to other entities]
 
-## User Interface Design
+## User Interface
 
 ### Screen: [ScreenName]
 **Purpose**: [What user accomplishes here]  
-**Layout**:
-```
-┌─────────────────────────┐
-│  Header                 │
-├─────────────────────────┤
-│  Main Content           │
-│  - Element 1            │
-│  - Element 2            │
-├─────────────────────────┤
-│  Footer/Actions         │
-└─────────────────────────┘
-```
+**Key Elements & Interactions**:
+- [Element 1]: [Purpose] → [User interaction and result]
+- [Element 2]: [Purpose] → [User interaction and result]
+- [Element 3]: [Purpose] → [User interaction and result]
 
-**Key Elements**:
-- [Element 1]: [Purpose and behavior]
-- [Element 2]: [Purpose and behavior]
-
-**User Interactions**:
-- [Action 1] → [Result]
-- [Action 2] → [Result]
-
-## Key Interactions & Flows
+## Key User Flows
 
 ### Flow: [FlowName]
-**Scenario**: [User story this implements]
+**Implements**: [User story from requirements]
 
 1. User [action]
 2. System [response]
-3. System [next step]
-4. User sees [result]
+3. User sees [result]
 
-**Error Handling**:
-- If [error condition] → [behavior]
-- If [error condition] → [behavior]
+**Error Handling**: [How errors are handled in this flow]
 
 ## File Structure
 ```
@@ -193,109 +169,29 @@ project-root/
 └── README.md
 ```
 
-## Design Decisions & Tradeoffs
+## Implementation Notes
 
-### Decision: [DecisionName]
-**Choice**: [What we decided]  
-**Alternatives Considered**: [What else we could do]  
-**Rationale**: [Why we chose this]  
-**Tradeoffs**: [What we gain/lose]
+### Key Design Decisions
+- [Decision 1]: [Why we chose this approach]
+- [Decision 2]: [Why we chose this approach]
 
-## Non-Functional Considerations
+### Non-Functional Requirements
+- **Performance**: [Key performance considerations]
+- **Accessibility**: [Accessibility approach if required]
+- **Error Handling**: [How errors are caught and displayed to users]
 
-### Performance
-- [Performance approach, e.g., "Lazy load components"]
-- [Optimization strategy, e.g., "Memoize expensive calculations"]
+## Testing Approach
 
-### Scalability
-- [How design handles growth]
-- [What needs to change if requirements scale]
+### Testing Tools
+- **Framework**: [e.g., Vitest, Jest, pytest]
+- **Run Command**: `[e.g., npm test, pytest]`
 
-### Accessibility
-- [Accessibility approach, e.g., "ARIA labels on all interactive elements"]
-- [Keyboard navigation strategy]
-
-### Error Handling
-- [Error handling strategy]
-- [User feedback approach]
-
-## Testing Strategy
-
-**Philosophy**: Every task must be verified before moving to the next. Testing is incremental and continuous.
-
-### Testing Tools & Framework
-- **Testing Framework**: [e.g., Jest, pytest, Vitest, etc.]
-- **Testing Library**: [e.g., React Testing Library, unittest, etc.]
-- **Test Runner Command**: `[e.g., npm test, pytest, etc.]`
-- **Coverage Tool** (if applicable): [e.g., Jest coverage, coverage.py]
-
-### Verification Approach for Each Task Type
-
-#### Code/Logic Tasks
-- **Verification Method**: Automated tests
-- **When to Test**: [After each task / TDD / as you go]
-- **What to Test**: 
-  - Function behavior with valid inputs
-  - Edge cases and error handling
-  - Integration with other components
-
-#### UI/Component Tasks
-- **Verification Method**: [Automated tests + manual verification / manual only]
-- **Automated Tests**: Component rendering, props, interactions
-- **Manual Verification**: Visual appearance, responsiveness, UX flow
-
-#### Configuration/Setup Tasks
-- **Verification Method**: [e.g., "Run build command", "Run dev server"]
-- **Success Criteria**: No errors, expected output
-
-### Test Writing Approach
-[Describe when tests should be written:]
-- **Test-Driven Development (TDD)**: Write tests before implementation
-- **Test-After**: Implement feature, then write tests
-- **Incremental**: Write tests as you implement
-
-### Critical Testing Rules
-1. Every task must have clear verification steps
-2. Tests must pass before moving to next task
-3. If tests fail repeatedly (3+ times), stop and reassess
-4. Document any tasks that cannot be automated (manual verification)
-
-### Unit Tests
-- **What**: Test individual components/functions in isolation
-- **Where**: `src/__tests__/` or alongside source files
-- **Key areas**: [List critical functions to test]
-- **Run Command**: `[command to run unit tests]`
-
-### Integration Tests
-- **What**: Test component interactions and data flow
-- **Key flows**: [List important user flows to test]
-- **Run Command**: `[command to run integration tests]`
-
-### Manual Testing Scenarios
-- **What**: UI/UX verification that requires human judgment
-- **Key scenarios**: [List scenarios to manually verify]
-- **When**: After completing each phase with UI changes
-
-## Development Approach
-
-### Phase Breakdown
-[High-level phases - detailed breakdown happens in plan.md]
-1. **Phase 1**: [e.g., "Setup & Core Structure"]
-2. **Phase 2**: [e.g., "Data Layer"]
-3. **Phase 3**: [e.g., "UI Components"]
-4. **Phase 4**: [e.g., "Integration & Polish"]
-
-### Development Standards
-- [Coding conventions]
-- [Naming conventions]
-- [Documentation requirements]
-
-## Open Questions
-[Any remaining technical uncertainties - resolve before planning]
-- [Question 1]
-- [Question 2]
+### Testing Strategy
+- [When to write tests: TDD / test-after / incremental]
+- [What to test: unit tests for logic, component tests for UI, integration tests for flows]
+- [Manual verification needed for: visual appearance, UX flows]
 
 ## References
-- Requirements: `spec/requirements.md`
+- Requirements: `specs/<project-name>/requirements.md`
 - [Any relevant documentation or resources]
 ```

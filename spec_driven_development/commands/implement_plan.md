@@ -2,20 +2,26 @@
 Implements the project based on the approved implementation plan with rigorous testing.
 
 ## Initial Setup
+1. **Check for existing projects**: List directories in `specs/`
+2. **If multiple projects exist**: Ask user which project to work on
+
 Respond with:
 ```
 I'm ready to implement the plan.
 
-I'll read your plan from spec/plan.md, requirements from spec/requirements.md, and design from spec/design.md to guide the implementation.
+[If multiple projects: "Which project are you working on? Available: <list>"]
+
+I'll read your plan from specs/<project-name>/plan.md to guide the implementation.
 ```
 
-Then proceed to read documents and start implementing.
+Then proceed to read the plan and start implementing.
 
 ## Workflow
-1. **Read all spec documents** (`plan.md`, `requirements.md`, `design.md`) FULLY
-2. **Check for existing checkmarks** `[x]` in plan.md to find where to start
-3. **Create todo list** (if supported) to track progress
-4. **For EACH TASK** (not phase):
+1. **Select project** (if multiple exist in specs/)
+2. **Read plan document** (`specs/<project-name>/plan.md`) FULLY
+3. **Check for existing checkmarks** `[x]` in plan.md to find where to start
+4. **Create todo list** (if supported) to track progress
+5. **For EACH TASK** (not phase):
    - Implement the task
    - Write tests (if not written)
    - Run tests
@@ -25,7 +31,7 @@ Then proceed to read documents and start implementing.
    - Update checkboxes in plan.md
    - Report progress
    - Proceed to next task
-5. **After phase complete**: 
+6. **After phase complete**: 
    - **STOP** - do not continue to next phase
    - Summarize phase completion with all verification results
    - List any manual verification items needed
@@ -44,7 +50,7 @@ Then proceed to read documents and start implementing.
 - If tests fail 3 times: STOP, report, wait for user
 - If codebase doesn't match expectations: STOP, present options
 - Trust completed work, pick up from first unchecked item
-- Stay aligned with requirements.md and design.md
+- The plan.md contains all necessary information (it was created from requirements and design)
 - **Never proceed to the next phase without explicit user approval**
 
 ## Chat Output Format
@@ -127,16 +133,16 @@ Implementation Complete!
 
 Summary:
 - [Number] phases completed
-- All tasks from spec/plan.md implemented
+- All tasks from specs/<project-name>/plan.md implemented
 - Verification results: [summary]
 
 The project is ready for final review and testing.
 
-Please test the application and verify it meets all requirements from spec/requirements.md.
+Please test the application and verify it meets all requirements.
 ```
 
 ## File Output Format
-No new file is created. The command updates `spec/plan.md` by checking off items with `[x]` as they are completed:
+No new file is created. The command updates `specs/<project-name>/plan.md` by checking off items with `[x]` as they are completed:
 
 ```markdown
 ### Tasks
