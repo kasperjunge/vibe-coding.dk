@@ -10,7 +10,7 @@ Spec-Driven Development treats specification as the foundation that enables fast
 
 **Select a project:**
 Choose a small project that can be completed in a short session. Good candidates:
-- Simple game (memory match, platformer mini-game, puzzle)
+- Game (memory match, platformer mini-game, puzzle)
 - Web app (todo list, notes app, job board)
 - Utility tool (calculator, converter, data visualizer)
 
